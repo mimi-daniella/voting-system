@@ -146,7 +146,8 @@
 							<option value="ADMIN">Admin</option>
 						</select>
 					</div>
-
+					
+					<p class="text-sm text-black">I accept the <a href="${pageContext.request.contextPath}/legal.jsp" class="text-underline text-blue-500">Terms & Conditions</a></p>
 					<!-- Submit Button -->
 					<button type="submit"
 						class="cursor-pointer w-full bg-[var(--green)] hover:bg-green-400 text-white py-3 rounded-xl font-semibold transition duration-300 shadow-lg mt-2">
