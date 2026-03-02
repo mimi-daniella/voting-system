@@ -34,7 +34,7 @@
         <li><a class="md:p-4 py-3 px-0 block font-bold relative inline-block 
                       after:content-[''] after:block after:w-0 after:h-[2px] 
                       after:bg-[var(--green)] after:transition-all after:duration-300 
-                      hover:after:w-full text-black " href="#">About us</a></li>
+                      hover:after:w-full text-black " href="${pageContext.request.contextPath}/about.jsp">About us</a></li>
         <li><a class="md:p-4 py-3 px-0 block font-bold relative inline-block 
                       after:content-[''] after:block after:w-0 after:h-[2px] 
                       after:bg-[var(--green)] after:transition-all after:duration-300 
@@ -64,7 +64,7 @@
         <li><a class="py-2 px-4 block relative inline-block 
                       after:content-[''] after:block after:w-0 after:h-[2px] 
                       after:bg-[var(--green)] after:transition-all after:duration-300 
-                      hover:after:w-full text-[black] mb-4 text-2xl" href="#">About us</a></li>
+                      hover:after:w-full text-[black] mb-4 text-2xl" href="${pageContext.request.contextPath}/about.jsp">About us</a></li>
         <li><a class="py-2 px-4 block relative inline-block 
                       after:content-[''] after:block after:w-0 after:h-[2px] 
                       after:bg-[var(--green)] after:transition-all after:duration-300 
