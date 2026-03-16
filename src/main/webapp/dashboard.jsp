@@ -9,19 +9,13 @@
 <body class="bg-gray-100 min-h-screen">
 <%-- Session validation --%>
 <%
-    Object user = null;
-    // Try to get user object from session
-    if (session.getAttribute("user") != null) {
-        user = session.getAttribute("user");
-    } else if (session.getAttribute("userId") != null) {
-        // Optionally, fetch user from DB using userId
-        // For now, just allow access if userId is present
-        user = session.getAttribute("userId");
-    }
-    if (user == null) {
+    Object user = session.getAttribute("user");
+    if (user == null && session.getAttribute("userId") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
+
+    String userRole = (String) session.getAttribute("userRole");
 %>
     <section class="max-w-4xl mx-auto mt-10">
         <div class="bg-white rounded shadow p-8">
@@ -32,25 +26,22 @@
                 <div class="bg-blue-50 rounded p-6 shadow text-center">
                     <h2 class="text-xl font-semibold mb-2">Vote Now</h2>
                     <p class="mb-4 text-gray-700">Cast your vote for your preferred candidate.</p>
-                    <a href="vote" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go to Voting</a>
+                    <a href="vote.jsp" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Go to Voting</a>
                 </div>
                 <!-- Results Card -->
                 <div class="bg-green-50 rounded p-6 shadow text-center">
                     <h2 class="text-xl font-semibold mb-2">View Results</h2>
                     <p class="mb-4 text-gray-700">See the latest election results and statistics.</p>
-                    <a href="results" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">View Results</a>
+                    <a href="results.jsp" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">View Results</a>
                 </div>
                 <!-- Candidates Card -->
                 <div class="bg-yellow-50 rounded p-6 shadow text-center">
                     <h2 class="text-xl font-semibold mb-2">Candidates</h2>
                     <p class="mb-4 text-gray-700">Learn more about the candidates and their profiles.</p>
-                    <a href="candidates" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">View Candidates</a>
+                    <a href="candidates.jsp" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">View Candidates</a>
                 </div>
 
-                <%
-                    String userRole = (String) session.getAttribute("userRole");
-                    if ("ADMIN".equalsIgnoreCase(userRole)) {
-                %>
+                <% if ("ADMIN".equalsIgnoreCase(userRole)) { %>
                 <!-- Admin Card -->
                 <div class="bg-purple-50 rounded p-6 shadow text-center md:col-span-3">
                     <h2 class="text-xl font-semibold mb-2">Admin</h2>
@@ -58,9 +49,8 @@
                     <a href="<%=request.getContextPath()%>/admin/dashboard"
                        class="bg-[var(--purple)] text-white px-4 py-2 rounded hover:opacity-95 transition">Manage Contesters</a>
                 </div>
-                <%
-                    }
-                %>
+                <% } %>
+
             </div>
         </div>
     </section>
