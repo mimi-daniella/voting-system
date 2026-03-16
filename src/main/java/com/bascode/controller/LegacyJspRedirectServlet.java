@@ -17,7 +17,8 @@ import java.io.IOException;
         "/results.jsp",
         "/profile.jsp",
         "/candidates.jsp",
-        "/submit-vote.jsp"
+        "/submit-vote.jsp",
+        "/contact.jsp"
 })
 public class LegacyJspRedirectServlet extends HttpServlet {
 
@@ -33,9 +34,9 @@ public class LegacyJspRedirectServlet extends HttpServlet {
         else if (uri.endsWith("/profile.jsp")) target = "/profile";
         else if (uri.endsWith("/candidates.jsp")) target = "/candidates";
         else if (uri.endsWith("/submit-vote.jsp")) target = "/dashboard";
+        else if (uri.endsWith("/contact.jsp")) target = "/contact";
         else target = "/";
 
         response.sendRedirect(ctx + target);
     }
 }
-

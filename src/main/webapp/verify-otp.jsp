@@ -27,6 +27,14 @@
                 </div>
                 <button type="submit" class=" cursor-pointer w-full bg-black px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800">Verify</button>
             </form>
+
+            <div class="mt-6 text-center text-sm text-gray-600">
+                Didn’t receive the code?
+                <form action="resend-otp" method="post" class="inline">
+                    <input type="hidden" name="email" value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : (request.getParameter("email") != null ? request.getParameter("email") : "") %>" />
+                    <button type="submit" class="font-semibold text-black hover:underline">Resend code</button>
+                </form>
+            </div>
         </div>
     </section>
 </body>

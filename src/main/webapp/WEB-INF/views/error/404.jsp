@@ -25,7 +25,7 @@
         >
           Go back home
         </a>
-        <a href="${pageContext.request.contextPath}/contact.jsp" class="text-sm font-semibold text-gray-900">
+        <a href="${pageContext.request.contextPath}/contact" class="text-sm font-semibold text-gray-900">
           Contact support <span aria-hidden="true">&rarr;</span>
         </a>
       </div>

@@ -3,6 +3,7 @@ package com.bascode.controller;
 import com.bascode.model.entity.User;
 import com.bascode.model.entity.Vote;
 import com.bascode.model.entity.Contester;
+import com.bascode.model.entity.ElectionSettings;
 import com.bascode.model.enums.ContesterStatus;
 import com.bascode.model.enums.Role;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @WebServlet("/submit-vote")
 public class VoteServlet extends HttpServlet {
@@ -31,6 +33,23 @@ public class VoteServlet extends HttpServlet {
             User user = resolveUser(session, em);
             if (user == null) {
                 response.sendRedirect(request.getContextPath() + "/login.jsp");
+                return;
+            }
+
+            ElectionSettings settings = em.createQuery("SELECT s FROM ElectionSettings s ORDER BY s.id ASC", ElectionSettings.class)
+                    .setMaxResults(1)
+                    .getResultStream()
+                    .findFirst()
+                    .orElse(null);
+            boolean closedByToggle = settings != null && !settings.isVotingOpen();
+            boolean closedByDeadline = settings != null && settings.getVotingClosesAt() != null &&
+                    LocalDateTime.now().isAfter(settings.getVotingClosesAt());
+            if (closedByToggle || closedByDeadline) {
+                String reason = closedByDeadline ? "Voting deadline reached." : "Voting is currently closed by the admin.";
+                request.setAttribute("votingClosed", true);
+                request.setAttribute("votingClosedReason", reason);
+                request.setAttribute("candidates", java.util.Collections.emptyList());
+                request.getRequestDispatcher("/WEB-INF/views/vote.jsp").forward(request, response);
                 return;
             }
 

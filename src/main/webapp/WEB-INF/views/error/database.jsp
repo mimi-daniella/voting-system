@@ -44,7 +44,7 @@
          class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
         Back to Home
       </a>
-      <a href="${pageContext.request.contextPath}/contact.jsp"
+      <a href="${pageContext.request.contextPath}/contact"
          class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
         Contact Support
       </a>

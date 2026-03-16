@@ -43,6 +43,10 @@
            class="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 hover:shadow transition duration-200">
           Users
         </a>
+        <a href="<%=request.getContextPath()%>/admin/messages"
+           class="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 hover:shadow transition duration-200">
+          Messages
+        </a>
         <a href="<%=request.getContextPath()%>/admin/results"
            class="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 hover:shadow transition duration-200">
           Results
