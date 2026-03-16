@@ -42,13 +42,26 @@
             <%
               }
             %>
+            <%
+              Object closed = request.getAttribute("votingClosed");
+              if (Boolean.TRUE.equals(closed)) {
+                String reason = (String) request.getAttribute("votingClosedReason");
+                if (reason == null) reason = "Voting is closed.";
+            %>
+              <div class="mt-6 rounded-2xl p-4 border bg-red-50 border-red-200 text-red-800">
+                <div class="font-semibold">Voting Closed</div>
+                <div class="mt-1 text-sm"><%= reason %></div>
+              </div>
+            <%
+              }
+            %>
 
             <form action="<%=request.getContextPath()%>/submit-vote" method="post" class="mt-8">
                 <div class="mb-6">
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Select Candidate</label>
                     <select name="candidateId"
                             class="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[var(--purple-light)] transition"
-                            required>
+                            required <%= Boolean.TRUE.equals(request.getAttribute("votingClosed")) ? "disabled" : "" %>>
                         <option value="">-- Choose a candidate --</option>
                         <%-- Dynamically list candidates from servlet (MVC) --%>
                         <%
@@ -77,7 +90,7 @@
                 <div class="flex flex-wrap gap-3">
                   <button type="submit"
                           class="px-6 py-3 rounded-2xl bg-gradient-to-r from-[var(--green)] to-emerald-600 text-white font-semibold hover:brightness-95 hover:shadow transition duration-200 disabled:opacity-50"
-                          <%= (request.getAttribute("candidates") == null || ((java.util.List)request.getAttribute("candidates")).isEmpty()) ? "disabled" : "" %>>
+                          <%= (Boolean.TRUE.equals(request.getAttribute("votingClosed")) || request.getAttribute("candidates") == null || ((java.util.List)request.getAttribute("candidates")).isEmpty()) ? "disabled" : "" %>>
                     Submit Vote
                   </button>
                   <a href="<%=request.getContextPath()%>/results"

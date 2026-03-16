@@ -47,8 +47,19 @@
                     <a href="candidates" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">View Candidates</a>
                 </div>
 
+                <!-- Support Chat Card -->
                 <%
                     String userRole = (String) session.getAttribute("userRole");
+                    boolean isAdmin = "ADMIN".equalsIgnoreCase(userRole);
+                %>
+                <div class="bg-purple-50 rounded p-6 shadow text-center">
+                    <h2 class="text-xl font-semibold mb-2">Support Chat</h2>
+                    <p class="mb-4 text-gray-700">Message the admin and continue the conversation anytime.</p>
+                    <a href="<%=request.getContextPath()%><%= isAdmin ? "/admin/support" : "/support" %>"
+                       class="bg-[var(--purple)] text-white px-4 py-2 rounded hover:opacity-95 transition">Open Chat</a>
+                </div>
+
+                <%
                     if ("ADMIN".equalsIgnoreCase(userRole)) {
                 %>
                 <!-- Admin Card -->

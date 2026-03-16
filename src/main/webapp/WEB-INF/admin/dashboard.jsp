@@ -68,6 +68,14 @@
            class="px-5 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 font-semibold hover:shadow transition duration-200">
           Manage Users
         </a>
+        <a href="<%=request.getContextPath()%>/admin/messages"
+           class="px-5 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 font-semibold hover:shadow transition duration-200">
+          Messages
+        </a>
+        <a href="<%=request.getContextPath()%>/admin/election"
+           class="px-5 py-2 rounded-xl bg-white border border-gray-200 text-gray-800 font-semibold hover:shadow transition duration-200">
+          Election
+        </a>
         <a href="<%=request.getContextPath()%>/admin/results"
            class="px-5 py-2 rounded-xl bg-gradient-to-r from-[var(--purple-light)] to-[var(--purple)] text-white font-semibold hover:brightness-95 hover:shadow transition duration-200">
           View Results
