@@ -1,4 +1,4 @@
-package com.bascode.controller;
+ package com.bascode.controller;
 
 import com.bascode.model.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -45,6 +45,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userId", user.getId());
             session.setAttribute("userRole", user.getRole().name());
             session.setAttribute("userEmail", user.getEmail());
+            session.setAttribute("firstName", user.getFirstName());
+            session.setAttribute("lastName", user.getLastName());
             // Some pages/servlets still expect a "user" session attribute.
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/dashboard");

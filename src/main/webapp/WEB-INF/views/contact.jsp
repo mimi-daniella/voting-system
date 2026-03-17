@@ -6,7 +6,7 @@
     <title>Contact - Voting System</title>
 </head>
 <body class="text-gray-900 ">
-<%@ include file="/WEB-INF/views/fragment/navbar.jsp" %>
+
 <section id="contact" class="py-20 px-15 mt-10">
   <div class="container-custom">
     <div class="grid md:grid-cols-2 gap-12 items-start">
@@ -101,6 +101,7 @@
       </div>
     </div>
   </div>
+  
 </section>
 
 <%@ include file="/WEB-INF/views/fragment/backToTop.jsp" %>

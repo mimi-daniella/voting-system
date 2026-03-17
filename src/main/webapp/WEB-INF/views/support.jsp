@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*,java.time.format.DateTimeFormatter,com.bascode.model.entity.SupportConversation,com.bascode.model.entity.SupportMessage,com.bascode.model.entity.User,com.bascode.model.enums.SupportSender,com.bascode.util.HtmlUtil" %>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
-<%@ include file="/WEB-INF/views/fragment/navbar.jsp" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@
   String err = request.getParameter("err");
 %>
 
-<section class="max-w-6xl mx-auto pt-28 px-4 pb-10">
+<section class="max-w-6xl mx-auto pt-10 px-4 pb-10">
 
   <% if ("empty".equalsIgnoreCase(err)) { %>
     <div class="mb-4 rounded-2xl p-4 border bg-amber-50 border-amber-200 text-amber-900">
@@ -195,6 +195,7 @@
       </section>
     </div>
   </div>
+  <%@ include file="/WEB-INF/views/fragment/bottomNavVoter.jsp" %>
 </section>
 
 <script type="text/javascript">
