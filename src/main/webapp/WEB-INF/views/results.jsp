@@ -2,7 +2,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*,com.bascode.model.entity.Contester,com.bascode.model.entity.User" %>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
-<%@ include file="/WEB-INF/views/fragment/navbar.jsp" %>
+
 <html lang="en">
 <head>
     <title>Results - Voting System</title>
@@ -24,7 +24,7 @@
   }
 %>
 
-  <section class="max-w-4xl mx-auto pt-28 px-4 pb-14">
+  <section class="max-w-4xl mx-auto pt-6 px-4 pb-14">
     <div class="fade-up bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
       <div class="flex items-start justify-between gap-4">
         <div>
@@ -102,6 +102,7 @@
         </a>
       </div>
     </div>
+     <%@ include file="/WEB-INF/views/fragment/bottomNavVoter.jsp" %>
   </section>
 </body>
 </html>
