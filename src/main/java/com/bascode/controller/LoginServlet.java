@@ -1,6 +1,8 @@
  package com.bascode.controller;
 
 import com.bascode.model.entity.User;
+import com.bascode.model.enums.Role;
+
 import org.mindrot.jbcrypt.BCrypt;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -49,7 +51,14 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("lastName", user.getLastName());
             // Some pages/servlets still expect a "user" session attribute.
             session.setAttribute("user", user);
-            response.sendRedirect(request.getContextPath() + "/dashboard");
+         // ✅ Updated redirect logic
+            if (user.getRole() == Role.ADMIN) {
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            } else if (user.getRole() == Role.CONTESTER) {
+                response.sendRedirect(request.getContextPath() + "/contester/dashboard");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/dashboard");
+            }
         } catch (Exception ex) {
             ex.printStackTrace(); // Log the full stack trace to server logs
             request.setAttribute("error", "A system error occurred: " + ex.getMessage());

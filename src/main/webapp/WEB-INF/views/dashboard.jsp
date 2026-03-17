@@ -23,6 +23,7 @@
 		return;
 	}
 	%>
+	
 
 	<%@ include file="/WEB-INF/views/fragment/contactButton.jsp"%>
 	<%@ include file="/WEB-INF/views/fragment/bottomNavVoter.jsp"%>
@@ -134,7 +135,7 @@
 				</div>
 			</div>
 
-		
+
 		</main>
 	</section>
 </body>
