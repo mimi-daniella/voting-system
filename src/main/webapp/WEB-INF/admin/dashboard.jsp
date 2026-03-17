@@ -44,11 +44,14 @@
 <header class="sticky top-0 z-10">
   <div class="glass">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--purple)] to-[var(--green)] soft-glow"></div>
+      <div class="flex items-between gap-3">
+    <a href="${pageContext.request.contextPath}/"> <img alt="Logo"
+					class="cursor-pointer lg:h-[35px] lg:w-[200px] h-[35px] w-[130px]"
+					src="${pageContext.request.contextPath}/images/logos/logoShort.png">
+				</a>
         <div>
-          <h1 class="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">Admin Panel</h1>
-          <p class="text-sm text-gray-600">Overview, contesters, users, and results.</p>
+          <h1 class="text-sm  font-extrabold text-gray-500 tracking-tight">Admin Panel</h1>
+         
         </div>
       </div>
       <div class="flex items-center gap-2">
