@@ -51,9 +51,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("lastName", user.getLastName());
             // Some pages/servlets still expect a "user" session attribute.
             session.setAttribute("user", user);
-         // ✅ Updated redirect logic
             if (user.getRole() == Role.ADMIN) {
-                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                response.sendRedirect(request.getContextPath() + "/admin/contesters");
             } else if (user.getRole() == Role.CONTESTER) {
                 response.sendRedirect(request.getContextPath() + "/contester/dashboard");
             } else {
@@ -81,3 +80,5 @@ public class LoginServlet extends HttpServlet {
         return emf;
     }
 }
+
+

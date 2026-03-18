@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*,com.bascode.model.entity.Contester,com.bascode.model.entity.User" %>
-<%@ include file="/WEB-INF/views/fragment/head.jsp" %>
 
 <html lang="en">
 <head>
+    <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
     <title>Results - Voting System</title>
     <style>
       @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -12,6 +12,7 @@
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100">
+<%@ include file="/WEB-INF/views/fragment/quickNav.jsp" %>
 <%
   @SuppressWarnings("unchecked")
   List<Object[]> rows = (List<Object[]>) request.getAttribute("rows");
@@ -24,7 +25,7 @@
   }
 %>
 
-  <section class="max-w-4xl mx-auto pt-6 px-4 pb-14">
+  <section class="max-w-4xl mx-auto pt-28 px-4 pb-14">
     <div class="fade-up bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
       <div class="flex items-start justify-between gap-4">
         <div>
@@ -100,9 +101,20 @@
            class="px-5 py-2 rounded-xl bg-gradient-to-r from-[var(--purple-light)] to-[var(--purple)] text-white font-semibold hover:brightness-95 hover:shadow transition duration-200">
           View Candidates
         </a>
-      </div>
+     </div>
     </div>
-     <%@ include file="/WEB-INF/views/fragment/bottomNavVoter.jsp" %>
+     <%
+       String userRole = session != null ? (String) session.getAttribute("userRole") : null;
+       if ("CONTESTER".equalsIgnoreCase(userRole)) {
+     %>
+       <%@ include file="/WEB-INF/views/fragment/bottomNavContester.jsp" %>
+     <%
+       } else {
+     %>
+       <%@ include file="/WEB-INF/views/fragment/bottomNavVoter.jsp" %>
+     <%
+       }
+     %>
   </section>
 </body>
 </html>

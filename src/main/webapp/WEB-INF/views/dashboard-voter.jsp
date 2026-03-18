@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page import="com.bascode.model.entity.User" %>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
-<%@ include file="/WEB-INF/views/fragment/navbar.jsp" %>
+<%@ include file="/WEB-INF/views/fragment/quickNav.jsp" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,20 +26,49 @@
       <div class="hidden md:block w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--purple)] to-[var(--green)] shadow-lg"></div>
     </div>
 
-    <div class="mt-6 flex flex-wrap gap-2">
-      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold <%= hasVoted ? "text-green-800" : "text-amber-800" %>"
-            style="background-image:<%= hasVoted ? "linear-gradient(135deg, rgba(187,247,208,.85), rgba(220,252,231,.85))" : "linear-gradient(135deg, rgba(253,230,138,.85), rgba(254,215,170,.85))" %>;">
-        <%= hasVoted ? "Vote submitted" : "Vote not submitted" %>
-      </span>
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 p-5">
+        <div class="text-xs font-bold tracking-widest text-gray-500">VOTE STATUS</div>
+        <div class="mt-2 text-lg font-bold text-gray-900"><%= hasVoted ? "SUBMITTED" : "NOT SUBMITTED" %></div>
+        <div class="mt-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold
+            <%= hasVoted ? "text-green-800" : "text-amber-800" %>"
+            style="background-image:<%= hasVoted
+                ? "linear-gradient(135deg, rgba(187,247,208,.85), rgba(220,252,231,.85))"
+                : "linear-gradient(135deg, rgba(253,230,138,.85), rgba(254,215,170,.85))" %>;">
+            <%= hasVoted ? "Vote submitted" : "Pending" %>
+          </span>
+        </div>
+      </div>
+      <div class="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 p-5">
+        <div class="text-xs font-bold tracking-widest text-gray-500">NEXT STEP</div>
+        <div class="mt-2 text-lg font-bold text-gray-900"><%= hasVoted ? "View Results" : "Cast Vote" %></div>
+        <div class="mt-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-gray-700"
+                style="background-image:linear-gradient(135deg, rgba(229,231,235,.9), rgba(243,244,246,.9));">
+            <%= hasVoted ? "Results live" : "Voting open" %>
+          </span>
+        </div>
+      </div>
+      <div class="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 p-5">
+        <div class="text-xs font-bold tracking-widest text-gray-500">SUPPORT</div>
+        <div class="mt-2 text-lg font-bold text-gray-900">Admin Help</div>
+        <div class="mt-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-gray-700"
+                style="background-image:linear-gradient(135deg, rgba(229,231,235,.9), rgba(243,244,246,.9));">
+            Always available
+          </span>
+        </div>
+      </div>
     </div>
 
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 p-5 hover:shadow-md transition">
         <h2 class="text-lg font-bold text-gray-900">Vote Now</h2>
         <p class="mt-2 text-sm text-gray-600">Cast your vote for your preferred candidate.</p>
         <a href="<%=request.getContextPath()%>/vote"
-           class="mt-4 inline-flex px-4 py-2 rounded-xl bg-[var(--green)] text-white font-semibold hover:brightness-95 transition">
-          Go to Voting
+           class="mt-4 inline-flex px-4 py-2 rounded-xl bg-[var(--green)] text-white font-semibold hover:brightness-95 transition <%= hasVoted ? "opacity-50 pointer-events-none" : "" %>">
+          <%= hasVoted ? "Already Voted" : "Go to Voting" %>
         </a>
       </div>
       <div class="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 p-5 hover:shadow-md transition">
@@ -74,4 +103,3 @@
 </section>
 </body>
 </html>
-

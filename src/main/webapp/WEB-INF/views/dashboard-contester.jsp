@@ -1,7 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
-<%@ page import="java.time.format.DateTimeFormatter,com.bascode.model.entity.Contester,com.bascode.model.entity.PositionElection,com.bascode.model.entity.User,com.bascode.model.enums.ContesterStatus,com.bascode.model.enums.ElectionStatus" %>
+<%@ page import="java.time.format.DateTimeFormatter,com.bascode.model.entity.Contester,com.bascode.model.entity.PositionElection,com.bascode.model.entity.User,com.bascode.model.enums.ContesterStatus" %>
 <%@ include file="/WEB-INF/views/fragment/head.jsp" %>
 <%@ include file="/WEB-INF/views/fragment/navbar.jsp" %>
+<%@ include file="/WEB-INF/views/fragment/quickNav.jsp" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@
   boolean hasVoted = request.getAttribute("hasVoted") != null && (Boolean) request.getAttribute("hasVoted");
 
   String name = user != null ? (user.getFirstName() + " " + user.getLastName()) : "Contester";
-  String position = contester != null && contester.getPosition() != null ? contester.getPosition().name().replace('_',' ') : "—";
+  String position = contester != null && contester.getPosition() != null ? contester.getPosition().name().replace('_',' ') : "--";
   String status = contester != null && contester.getStatus() != null ? contester.getStatus().name() : "PENDING";
   boolean approved = "APPROVED".equalsIgnoreCase(status);
   boolean winner = contester != null && contester.isWinner();
@@ -122,4 +123,3 @@
 </section>
 </body>
 </html>
-

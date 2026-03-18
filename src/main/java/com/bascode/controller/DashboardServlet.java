@@ -1,10 +1,6 @@
 package com.bascode.controller;
 
-import com.bascode.model.entity.Contester;
-import com.bascode.model.entity.PositionElection;
 import com.bascode.model.entity.User;
-import com.bascode.model.enums.Role;
-import com.bascode.util.PositionElectionUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
@@ -15,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
-
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
     @Override
@@ -29,7 +23,11 @@ public class DashboardServlet extends HttpServlet {
 
         String roleStr = String.valueOf(session.getAttribute("userRole"));
         if ("ADMIN".equalsIgnoreCase(roleStr)) {
-            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            response.sendRedirect(request.getContextPath() + "/admin/contesters");
+            return;
+        }
+        if ("CONTESTER".equalsIgnoreCase(roleStr)) {
+            response.sendRedirect(request.getContextPath() + "/contester/dashboard");
             return;
         }
 
@@ -52,34 +50,6 @@ public class DashboardServlet extends HttpServlet {
             boolean hasVoted = votedCount > 0;
             request.setAttribute("user", user);
             request.setAttribute("hasVoted", hasVoted);
-
-            if (user.getRole() == Role.CONTESTER) {
-                List<Object[]> rows = em.createQuery(
-                                "SELECT c, COUNT(v.id) " +
-                                        "FROM Contester c " +
-                                        "LEFT JOIN Vote v ON v.contester = c " +
-                                        "WHERE c.user.id = :uid " +
-                                        "GROUP BY c",
-                                Object[].class
-                        )
-                        .setParameter("uid", userId)
-                        .getResultList();
-                Contester contester = rows.isEmpty() ? null : (Contester) rows.get(0)[0];
-                Long contesterVotes = rows.isEmpty() ? 0L : (Long) rows.get(0)[1];
-
-                PositionElection pe = null;
-                if (contester != null && contester.getPosition() != null) {
-                    pe = PositionElectionUtil.getOrCreate(em, contester.getPosition());
-                }
-
-                request.setAttribute("contester", contester);
-                request.setAttribute("contesterVotes", contesterVotes != null ? contesterVotes : 0L);
-                request.setAttribute("positionElection", pe);
-
-                request.getRequestDispatcher("/WEB-INF/views/dashboard-contester.jsp").forward(request, response);
-                return;
-            }
-
             request.getRequestDispatcher("/WEB-INF/views/dashboard-voter.jsp").forward(request, response);
         } finally {
             em.close();
