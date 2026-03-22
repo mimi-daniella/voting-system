@@ -20,4 +20,17 @@
         </properties>
 
     </persistence-unit>
+
+  <!-- Production (Clever Cloud) -->
+    <persistence-unit name="prodPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://b7q9ca8hvlvs2udazpk1-mysql.services.clever-cloud.com:3306/2udazpk1"/>
+            <property name="javax.persistence.jdbc.user" value="uomxjjvqbdtj7p3a"/>
+            <property name="javax.persistence.jdbc.password" value="uomxjjvqbdtj7p3a"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+
 </persistence>
