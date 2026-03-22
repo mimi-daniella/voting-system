@@ -175,7 +175,6 @@
 							class="mt-1 w-full px-3 py-3 rounded-xl border border-gray-200 bg-white
 							focus:outline-none focus:ring-2 focus:ring-[var(--purple-light)] transition">
 							<option value="VOTER">Voter</option>
-							<option value="CONTESTER">Contester</option>
 							<option value="ADMIN">Admin</option>
 						</select>
 					</div>

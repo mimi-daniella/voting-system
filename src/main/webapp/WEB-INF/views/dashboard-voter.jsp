@@ -19,7 +19,7 @@
   String type = request.getParameter("type");
 %>
 
-<section class="max-w-5xl mx-auto pt-28 px-4 pb-12">
+<section class="max-w-5xl mx-auto pt-6 px-4 pb-12">
   <div class="bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
     <div class="flex items-start justify-between gap-4">
       <div>

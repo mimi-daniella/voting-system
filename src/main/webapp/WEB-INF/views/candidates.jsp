@@ -21,7 +21,7 @@
   if (positionCounts == null) positionCounts = new LinkedHashMap<>();
 %>
 
-    <section class="max-w-3xl mx-auto pt-28 px-4 pb-14">
+    <section class="max-w-3xl mx-auto pt-6 px-4 pb-14">
         <div class="fade-up bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
             <div class="flex items-start justify-between gap-4">
               <div>

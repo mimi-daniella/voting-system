@@ -43,7 +43,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M8 10h8M8 14h5M7 4h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-4l-4 4v-4H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/>
       </svg>
-      <span class="text-[12px] mt-1 text-black">Admin</span>
+      <span class="text-[12px] mt-1 text-black">Contact</span>
     </a>
 
     <!-- Profile -->
