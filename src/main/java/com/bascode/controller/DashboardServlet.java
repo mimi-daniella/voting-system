@@ -1,7 +1,7 @@
 package com.bascode.controller;
 
 import com.bascode.model.entity.User;
-import com.bascode.util.ContesterAccessUtil;
+import com.bascode.model.enums.Role;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletException;
@@ -10,15 +10,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
+
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
@@ -28,28 +30,31 @@ public class DashboardServlet extends HttpServlet {
             Long userId = toLong(session.getAttribute("userId"));
             User user = userId != null ? em.find(User.class, userId) : null;
             if (user == null) {
-                response.sendRedirect(request.getContextPath() + "/login.jsp");
-                return;
-            }
-            if (user.getRole() != null && "ADMIN".equalsIgnoreCase(user.getRole().name())) {
-                response.sendRedirect(request.getContextPath() + "/admin/contesters");
-                return;
-            }
-            if (ContesterAccessUtil.hasContesterProfile(em, userId)) {
-                response.sendRedirect(request.getContextPath() + "/contester/dashboard");
+                response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }
 
+            // Admins and super admins go to admin dashboard
+            if (user.getRole() == Role.ADMIN || user.getRole() == Role.SUPER_ADMIN) {
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                return;
+            }
+
+            // ✅ Everyone else (voter or contester) goes to voter dashboard
             long votedCount = em.createQuery(
-                            "SELECT COUNT(v) FROM Vote v WHERE v.voter.id = :uid",
-                            Long.class
-                    )
-                    .setParameter("uid", userId)
-                    .getSingleResult();
+                    "SELECT COUNT(v) FROM Vote v WHERE v.voter.id = :uid",
+                    Long.class
+                )
+                .setParameter("uid", userId)
+                .getSingleResult();
+
             boolean hasVoted = votedCount > 0;
             request.setAttribute("user", user);
             request.setAttribute("hasVoted", hasVoted);
-            request.getRequestDispatcher("/WEB-INF/views/dashboard-voter.jsp").forward(request, response);
+
+            request.getRequestDispatcher("/WEB-INF/views/dashboard-voter.jsp")
+                   .forward(request, response);
+
         } finally {
             em.close();
         }
@@ -76,4 +81,3 @@ public class DashboardServlet extends HttpServlet {
         return emf;
     }
 }
-

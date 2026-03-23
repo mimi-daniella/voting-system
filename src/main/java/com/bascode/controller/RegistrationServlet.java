@@ -1,10 +1,7 @@
 package com.bascode.controller;
 
 import com.bascode.model.entity.User;
-import com.bascode.model.entity.Contester;
 import com.bascode.model.enums.Role;
-import com.bascode.model.enums.Position;
-import com.bascode.model.enums.ContesterStatus;
 import com.bascode.util.EmailUtil;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityManager;
@@ -15,10 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Base64;
 import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet("/register")
@@ -35,11 +30,9 @@ public class RegistrationServlet extends HttpServlet {
             String birthYearStr = request.getParameter("birthYear");
             String state = request.getParameter("state");
             String country = request.getParameter("country");
-            String roleStr = request.getParameter("role");
-            String positionStr = request.getParameter("position");
 
             // Input validation
-            if (firstName == null || lastName == null || email == null || password == null || confirmPassword == null || birthYearStr == null || state == null || country == null || roleStr == null) {
+            if (firstName == null || lastName == null || email == null || password == null || confirmPassword == null || birthYearStr == null || state == null || country == null) {
                 request.setAttribute("error", "All fields are required.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
@@ -49,14 +42,15 @@ public class RegistrationServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
-            
-         // Password strength validation: must contain letters, numbers, and special characters
-            String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+            // Password strength validation
+            String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
             if (!password.matches(passwordPattern)) {
                 request.setAttribute("error", "Password must be at least 8 characters long and include letters, numbers, and one special character.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
+
             int birthYear;
             LocalDate birthDate;
             try {
@@ -70,10 +64,11 @@ public class RegistrationServlet extends HttpServlet {
 
             EntityManagerFactory emf = getEmf();
             em = emf.createEntityManager();
+
             // Check for duplicate email
             long count = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email", Long.class)
-                .setParameter("email", email)
-                .getSingleResult();
+                    .setParameter("email", email)
+                    .getSingleResult();
             if (count > 0) {
                 request.setAttribute("error", "Email already registered.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -96,57 +91,15 @@ public class RegistrationServlet extends HttpServlet {
             user.setBirthDate(birthDate);
             user.setState(state);
             user.setCountry(country);
-         
-            Role role;
-            try {
-                role = Role.valueOf(roleStr.toUpperCase()); 
-            } catch (IllegalArgumentException e) {
-                request.setAttribute("error", "Invalid role selected.");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
-                return;
-            }
-            user.setRole(role == Role.ADMIN ? Role.ADMIN : Role.VOTER);
 
-            if (role == Role.CONTESTER) {
-                if (positionStr == null || positionStr.trim().isEmpty()) {
-                    request.setAttribute("error", "Please select a position to contest for.");
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
-                    return;
-                }
-                try {
-                    Position.valueOf(positionStr.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    request.setAttribute("error", "Invalid position selected.");
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
-                    return;
-                }
-            }
+            // Always set role to VOTER
+            user.setRole(Role.VOTER);
 
-            
             user.setEmailVerified(false);
             user.setVerificationCode(otp); // Store OTP
 
             em.getTransaction().begin();
             em.persist(user);
-
-            // If Contester, create Contester entity (PENDING) or auto-decline if position is full.
-            if (role == Role.CONTESTER) {
-                Position position = Position.valueOf(positionStr.toUpperCase());
-
-                long approvedCount = em.createQuery(
-                                "SELECT COUNT(c) FROM Contester c WHERE c.position = :position AND c.status = :status",
-                                Long.class
-                        )
-                        .setParameter("position", position)
-                        .setParameter("status", ContesterStatus.APPROVED)
-                        .getSingleResult();
-
-                Contester contester = new Contester();
-                contester.setUser(user);
-                contester.setPosition(position);
-                contester.setStatus(approvedCount >= 3 ? ContesterStatus.DENIED : ContesterStatus.PENDING);
-                em.persist(contester);
-            }
             em.getTransaction().commit();
 
             // Send OTP email
@@ -157,13 +110,14 @@ public class RegistrationServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
-            // Redirect to OTP verification page with email as parameter
+
+            // Redirect to OTP verification page
             response.sendRedirect("verify-otp.jsp?email=" + java.net.URLEncoder.encode(email, "UTF-8"));
+
         } catch (Exception ex) {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            // Forward to OTP page with error and email
             request.setAttribute("error", "A system error occurred while processing your registration. Please try entering your OTP or contact support.");
             request.setAttribute("email", request.getParameter("email"));
             request.getRequestDispatcher("verify-otp.jsp").forward(request, response);

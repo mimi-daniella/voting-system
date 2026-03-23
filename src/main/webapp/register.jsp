@@ -194,7 +194,7 @@
 							class="mt-1 w-full px-3 py-3 rounded-xl border border-gray-200 bg-white
 							focus:outline-none focus:ring-2 focus:ring-[var(--purple-light)] transition">
 							<option value="VOTER">Voter</option>
-							<option value="ADMIN">Admin</option>
+							<!--  <option value="ADMIN">Admin</option>-->
 						</select>
 					</div>
 
@@ -215,17 +215,24 @@
 							already has 3 approved contesters, your contester application
 							will be declined automatically.</p>
 					</div>
+					
+					<div class="flex items-center justify-center gap-1">
+					<input type="checkbox" name="accept" value="yes" required >
+						<p class="text-sm text-black">
+							I accept the <a
+								href="${pageContext.request.contextPath}/legal.jsp"
+								class="text-underline text-blue-500">Terms & Conditions</a>
 
-					<p class="text-sm text-black">
-						I accept the <a
-							href="${pageContext.request.contextPath}/legal.jsp"
-							class="text-underline text-blue-500">Terms & Conditions</a>
-					</p>
-					<!-- Submit Button -->
-					<button type="submit"
-						class="cursor-pointer w-full bg-[var(--green)] hover:bg-green-400 text-white py-3 rounded-xl font-semibold transition duration-300 shadow-lg mt-2">
-						Sign Up</button>
-				</form>
+							<p />
+					</div>
+					
+				<!-- Submit Button -->
+							<button type="submit"
+								class="cursor-pointer w-full bg-[var(--green)] hover:bg-green-400 text-white py-3 rounded-xl font-semibold transition duration-300 shadow-lg mt-2">
+								Sign Up</button>
+				
+						
+						</form>
 
 				<!-- Already have account -->
 				<p class="text-center text-sm text-gray-600 mt-4">
