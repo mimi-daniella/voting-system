@@ -124,26 +124,33 @@
           <td><span class="admin-badge <%= verified ? "verified" : "denied" %>"><%= verified ? "VERIFIED" : "NOT VERIFIED" %></span></td>
           <td><span class="admin-badge <%= suspended ? "pending" : "approved" %>"><%= suspended ? "SUSPENDED" : "ACTIVE" %></span></td>
           <td><%= location.isEmpty() ? "—" : location %></td>
-          <td>
-            <div class="flex items-center gap-2">
-              <% if (self) { %>
-                <span class="text-xs text-slate-500">Current session</span>
-              <% } else { %>
-                <form method="post" action="<%=request.getContextPath()%>/admin/users/action">
-                  <input type="hidden" name="userId" value="<%= u.getId() %>">
-                  <input type="hidden" name="action" value="<%= suspended ? "activate" : "suspend" %>">
-                  <button type="submit" class="admin-icon-button" title="<%= suspended ? "Reactivate user" : "Suspend user" %>">
-                    <%= suspended ? "↺" : "⏸" %>
-                  </button>
-                </form>
-                <form method="post" action="<%=request.getContextPath()%>/admin/users/action" onsubmit="return confirm('Delete <%= fullName %>? This removes related votes, contester data, and support records.');">
-                  <input type="hidden" name="userId" value="<%= u.getId() %>">
-                  <input type="hidden" name="action" value="delete">
-                  <button type="submit" class="admin-icon-button danger" title="Delete user">🗑</button>
-                </form>
-              <% } %>
-            </div>
-          </td>
+<td>
+  <div class="flex items-center gap-2">
+    <% if (self) { %>
+      <span class="text-xs text-slate-500">Current session</span>
+    <% } else { 
+         String userRole = u.getRole() != null ? u.getRole().name() : "";
+         if ("SUPER_ADMIN".equalsIgnoreCase(userRole)) { %>
+           <span class="text-xs text-red-500">Cannot delete SUPER_ADMIN</span>
+         <% } else { %>
+           <form method="post" action="<%=request.getContextPath()%>/admin/users/action">
+             <input type="hidden" name="userId" value="<%= u.getId() %>">
+             <input type="hidden" name="action" value="<%= suspended ? "activate" : "suspend" %>">
+             <button type="submit" class="admin-icon-button" 
+                     title="<%= suspended ? "Reactivate user" : "Suspend user" %>">
+               <%= suspended ? "↺" : "⏸" %>
+             </button>
+           </form>
+           <form method="post" action="<%=request.getContextPath()%>/admin/users/action" 
+                 onsubmit="return confirm('Delete <%= fullName %>? This removes related votes, contester data, and support records.');">
+             <input type="hidden" name="userId" value="<%= u.getId() %>">
+             <input type="hidden" name="action" value="delete">
+             <button type="submit" class="admin-icon-button danger" title="Delete user">🗑</button>
+           </form>
+         <% } 
+       } %>
+  </div>
+</td>
         </tr>
       <%
         }
