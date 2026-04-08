@@ -22,13 +22,13 @@
 %>
 
 <section class="max-w-5xl mx-auto pt-6 px-4 pb-12">
-  <div class="bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+  <div class="p-6 md:p-8 border border-gray-100">
     <div class="flex items-start justify-between gap-4">
       <div>
         <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Welcome, <%= name %></h1>
         <p class="text-gray-600 mt-1">Vote, view results, and explore candidates.</p>
       </div>
-      <div class="hidden md:block w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--purple)] to-[var(--green)] shadow-lg"></div>
+     <img alt="logo" src="${pageContext.request.contextPath}/images/logos/fingerPrint.png" class="justify-center w-12 h-12">
     </div>
 
     <% if (msg != null && !msg.trim().isEmpty()) { %>
