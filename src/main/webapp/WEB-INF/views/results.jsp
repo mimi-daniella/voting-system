@@ -26,13 +26,15 @@
 %>
 
   <section class="max-w-4xl mx-auto pt-6 px-4 pb-14">
-    <div class="fade-up bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+    <div class="fade-up  p-6 md:p-8 border border-gray-100">
       <div class="flex items-start justify-between gap-4">
-        <div>
+        <div class="border border-black-100 p-2 w-250 ">
+        <div class="flex items-center justify-start gap-2">
+        <img alt="logo" src="${pageContext.request.contextPath}/images/logos/fingerPrint.png" class="justify-center w-12 h-12">
           <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Election Results</h1>
-          <p class="text-gray-600 mt-1">Read-only vote counts per approved contester.</p>
+          </div>
+          <p class="text-gray-600 mt-2">Read-only vote counts per approved contester.</p>
         </div>
-        <div class="hidden md:block w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--purple)] to-[var(--green)] shadow-lg"></div>
       </div>
 
       <div class="mt-6 flex flex-wrap gap-2">

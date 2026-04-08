@@ -22,7 +22,7 @@
 %>
 
     <section class="max-w-3xl mx-auto pt-6 px-4 pb-14">
-        <div class="fade-up bg-white/90 backdrop-blur rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+        <div class="fade-up  p-6 md:p-8 border border-gray-100">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Approved Contesters</h1>
