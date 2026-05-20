@@ -7,8 +7,8 @@ import jakarta.mail.internet.*;
 public class EmailUtil {
     // Send OTP verification email
     public static void sendVerificationEmail(String to, String otp) throws MessagingException {
-        final String username = "chisomwork17@gmail.com"; // full Gmail address
-        final String password = "jyfsxbpbqkyfofhi";       // 16-char App Password
+        final String username = System.getProperty("EMAIL_USER"); 
+        final String password = System.getProperty("EMAIL_PASSWORD");
 
         String subject = "Your OTP Code";
         String content = "Your OTP code for email verification is: " + otp +
@@ -38,8 +38,8 @@ public class EmailUtil {
 
     // Send password reset email
     public static void sendPasswordResetEmail(String to, String resetLink) throws MessagingException {
-        final String username = "chisomwork17@gmail.com"; // full Gmail address
-        final String password = "jyfsxbpbqkyfofhi";       // 16-char App Password
+        final String username = System.getProperty("EMAIL_USER");
+        final String password = System.getProperty("EMAIL_PASSWORD");
 
         String subject = "Password Reset Link";
         String content = "You requested a password reset.\n\n" +
@@ -70,9 +70,10 @@ public class EmailUtil {
 
     public static void sendPasswordResetEmail1(String to, String resetLink) throws MessagingException {
         String host = "smtp.gmail.com";
-        String from = "chisomwork17@email.com";
-        final String username = "chisomwork17";
-        final String password = "jyfsxbpbqkyfofhi";
+        final String username = System.getProperty("EMAIL_USER"); 
+        final String password = System.getProperty("EMAIL_PASSWORD");
+        String from = System.getProperty("EMAIL_USER"); 
+
 
         String subject = "Password Reset Request";
         String content = "We received a request to reset your password.\n\n"
