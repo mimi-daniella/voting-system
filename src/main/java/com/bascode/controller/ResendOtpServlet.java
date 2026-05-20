@@ -34,7 +34,6 @@ public class ResendOtpServlet extends HttpServlet {
                     .findFirst()
                     .orElse(null);
 
-            // Avoid leaking whether an account exists for arbitrary emails.
             if (user == null) {
                 request.setAttribute("success", "If an account exists for that email, a new OTP has been sent.");
                 request.setAttribute("email", email);
