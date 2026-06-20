@@ -11,11 +11,13 @@ public class JPAInitializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // Decide which persistence unit to use
+  
         String puName = System.getenv().getOrDefault("PU_NAME", "VotingPU");
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(puName);
         sce.getServletContext().setAttribute("emf", emf);
+
+
     }
 
     @Override
@@ -25,4 +27,6 @@ public class JPAInitializer implements ServletContextListener {
             emf.close();
         }
     }
+    
+    
 }
