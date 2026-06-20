@@ -1,11 +1,10 @@
 package com.bascode.util;
 
-import java.util.Properties;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
+import java.util.Properties;
 
 public class EmailUtil {
-    // Send OTP verification email
     public static void sendVerificationEmail(String to, String otp) throws MessagingException {
         final String username = System.getProperty("EMAIL_USER"); 
         final String password = System.getProperty("EMAIL_PASSWORD");
@@ -15,27 +14,28 @@ public class EmailUtil {
                 "\n\nEnter this code on the verification page to activate your account.";
 
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
         Session session = Session.getInstance(props, new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
 
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(username));
+        message.setFrom(new InternetAddress(from));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject(subject);
         message.setText(content);
 
         Transport.send(message);
     }
-
+    
+    
+    //forgot password
     // Send password reset email
     public static void sendPasswordResetEmail(String to, String resetLink) throws MessagingException {
         final String username = System.getProperty("EMAIL_USER");

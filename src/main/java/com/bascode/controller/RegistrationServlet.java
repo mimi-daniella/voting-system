@@ -105,9 +105,10 @@ public class RegistrationServlet extends HttpServlet {
             // Send OTP email
             try {
                 EmailUtil.sendVerificationEmail(email, otp);
-            } catch (MessagingException e) {
+            } catch (MessagingException ex) {
                 request.setAttribute("error", "Registration succeeded, but failed to send OTP email.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
+                ex.printStackTrace();
                 return;
             }
 
